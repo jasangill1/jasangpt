@@ -27,7 +27,9 @@ const configuration = new Configuration({
       const completion = await openai.createChatCompletion({
         model: "gpt-3.5-turbo",
         messages: [
-          { role: "user", content: '${message}' },
+          {"role": "system", "content":" You are a CalenderGPT helpful assistant graphic design chatbot I can help you with your life schedule. What would you like to do?"},
+          
+          //{ role: "user", content: '${message}' },
         ],
       });
   

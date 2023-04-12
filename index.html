@@ -20,6 +20,9 @@
         </div>  
     </main>
     <script>
+        let message = [
+
+        ];
       const chatLog = document.getElementById('chat-log');
       const messageInput = document.getElementById('message-input');
       const messageForm = document.getElementById('message-form');
@@ -27,6 +30,8 @@
       messageForm.addEventListener('submit', async (event) => {
         event.preventDefault();
         const userMessage = messageInput.value;
+        const newMesasge =  {"role": "user", "content": '${userMessage}'}       
+        message.push(newMesasge);
         messageInput.value = '';
         const messageElement = document.createElement('div');
         messageElement.classList.add('message');
@@ -48,7 +53,8 @@
         });
 
         const data = await response.json();
-        
+        let newAssistantMessage = {"role": "user", "content": '${data.completion.content}'} 
+        messages.push(newAssistantMessage);
         const receivedMessageElement = document.createElement('div');
         receivedMessageElement.classList.add('message');
         receivedMessageElement.classList.add('message--received');
