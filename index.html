@@ -26,9 +26,38 @@
 
       messageForm.addEventListener('submit', async (event) => {
         event.preventDefault();
-
         const userMessage = messageInput.value;
-        // Call your API and append the response to chatLog
+        messageInput.value = '';
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('message');
+        messageElement.classList.add('message--sent');
+        messageElement.innerHTML = `
+          <div class="message__content">
+            ${userMessage}
+          </div>
+        `;
+        chatLog.appenChild(messageElement);
+        chatLog.scrollTop = chatLog.scrollHeight;
+        fetch('http://localhost:3000', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ message: userMessage })
+        });
+        .then(res.json())
+        .then(data => {
+          const messageElement = document.createElement('div');
+          messageElement.classList.add('message');
+          messageElement.classList.add('message--received');
+          messageElement.innerHTML = `
+            <div class="message__content">
+              ${data.complition.content}
+            </div>
+          `;
+          chatLog.appendChild(messageElement);
+          chatLog.scrollTop = chatLog.scrollHeight;
+        });
       });
     </script>
   </body>
