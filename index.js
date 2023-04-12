@@ -4,8 +4,8 @@ import bodyParser from "body-parser";
 import cors from "cors";
 
 // It's a good practice to store sensitive information like API keys in environment variables
-const apiKey = "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";
-const organizationId = "org-k7gdf8t0CkOLrnZTvtfeCLwW";
+const apiKey = process.env.OPENAI_API_KEY;
+const organizationId = process.env.OPENAI_ORG_ID;
 
 const configuration = new Configuration({
     organization: organizationId,
