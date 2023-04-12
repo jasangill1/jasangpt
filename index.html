@@ -36,28 +36,29 @@
             ${userMessage}
           </div>
         `;
-        chatLog.appenChild(messageElement);
+        chatLog.appendChild(messageElement);
         chatLog.scrollTop = chatLog.scrollHeight;
-        fetch('http://localhost:3000', {
+
+        const response = await fetch('http://localhost:3000/generate', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({ message: userMessage })
         });
-        .then(res.json())
-        .then(data => {
-          const messageElement = document.createElement('div');
-          messageElement.classList.add('message');
-          messageElement.classList.add('message--received');
-          messageElement.innerHTML = `
-            <div class="message__content">
-              ${data.complition.content}
-            </div>
-          `;
-          chatLog.appendChild(messageElement);
-          chatLog.scrollTop = chatLog.scrollHeight;
-        });
+
+        const data = await response.json();
+        
+        const receivedMessageElement = document.createElement('div');
+        receivedMessageElement.classList.add('message');
+        receivedMessageElement.classList.add('message--received');
+        receivedMessageElement.innerHTML = `
+          <div class="message__content">
+            ${data.completion.content}
+          </div>
+        `;
+        chatLog.appendChild(receivedMessageElement);
+        chatLog.scrollTop = chatLog.scrollHeight;
       });
     </script>
   </body>
